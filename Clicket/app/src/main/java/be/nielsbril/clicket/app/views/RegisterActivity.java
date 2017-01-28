@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity
 
     private ProgressDialog progressDialog;
     private AppCompatEditText mTxbEmail;
-    private AppCompatEditText mTxbLastname;
+    private AppCompatEditText mTxbName;
     private AppCompatEditText mTxbFirstname;
     private AppCompatEditText mTxbPhone;
     private AppCompatEditText mTxbPassword;
@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity
         progressDialog = new ProgressDialog(RegisterActivity.this, R.style.customDialog);
 
         mTxbEmail = (AppCompatEditText) findViewById(R.id.txbEmail);
-        mTxbLastname = (AppCompatEditText) findViewById(R.id.txbLastname);
+        mTxbName = (AppCompatEditText) findViewById(R.id.txbName);
         mTxbFirstname = (AppCompatEditText) findViewById(R.id.txbFirstname);
         mTxbPhone = (AppCompatEditText) findViewById(R.id.txbPhone);
         mTxbPassword = (AppCompatEditText) findViewById(R.id.txbPassword);
@@ -97,23 +97,23 @@ public class RegisterActivity extends AppCompatActivity
 
     private void onRegisterClicked() {
         String email = mTxbEmail.getText().toString();
-        String lastname = mTxbLastname.getText().toString();
+        String name = mTxbName.getText().toString();
         String firstname = mTxbFirstname.getText().toString();
         String phone = mTxbPhone.getText().toString();
         String password = mTxbPassword.getText().toString();
         String confirmPassword = mTxbConfirmPassword.getText().toString();
 
-        if (checkCredentials(email, lastname, firstname, phone, password, confirmPassword)) {
-            registerAccount(email, lastname, firstname, phone, password);
+        if (checkCredentials(email, name, firstname, phone, password, confirmPassword)) {
+            registerAccount(email, name, firstname, phone, password);
         } else {
             showRegisterError();
         }
     }
 
-    private boolean checkCredentials(String email, String lastname, String firstname, String phone, String password, String confirmPassword) {
+    private boolean checkCredentials(String email, String name, String firstname, String phone, String password, String confirmPassword) {
         boolean isValid = true;
 
-        if (email.equals("") || lastname.equals("") || firstname.equals("") || phone.equals("") || password.equals("") || confirmPassword.equals("")) {
+        if (email.equals("") || name.equals("") || firstname.equals("") || phone.equals("") || password.equals("") || confirmPassword.equals("")) {
             isValid = false;
             mValidation = "please fill in all fields";
         } else if (!Utils.isEmailValid(email)) {
@@ -133,15 +133,15 @@ public class RegisterActivity extends AppCompatActivity
         return isValid;
     }
 
-    private void registerAccount(String email, String lastname, String firstname, String phone, String password) {
-        Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().register(email, lastname, firstname, phone, password);
+    private void registerAccount(String email, String name, String firstname, String phone, String password) {
+        Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().register(email, name, firstname, phone, password);
         call.enqueue(registerCallback);
     }
 
     Callback<JsonObject> registerCallback = new Callback<JsonObject>() {
         @Override
         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() && response.body().getAsJsonPrimitive("success").getAsBoolean()) {
                 JsonObject body = response.body();
                 String token = body.getAsJsonPrimitive("token").getAsString();
                 String email = body.getAsJsonPrimitive("email").getAsString();
@@ -150,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity
                 stopDialog();
                 finish();
             } else {
-                mValidation = "unknown error";
+                mValidation = (!response.body().getAsJsonPrimitive("info").getAsString().equals("") ? response.body().getAsJsonPrimitive("info").getAsString() : "unknown error");
                 showRegisterError();
             }
         }

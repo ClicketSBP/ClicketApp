@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/parking">
-        <menu>
-            <item
-                android:id="@+id/nav_park"
-                android:icon="@drawable/ic_local_parking_black_24dp"
-                android:title="@string/nav_park" />
-        </menu>
-    </item>
+    <group android:checkableBehavior="single">
+        <item android:title="@string/parking">
+            <menu>
+                <item
+                    android:id="@+id/nav_park"
+                    android:checked="true"
+                    android:icon="@drawable/ic_local_parking_black_24dp"
+                    android:title="@string/nav_park" />
+            </menu>
+        </item>
 
-    <item android:title="@string/my_clicket">
-        <menu>
-            <item
-                android:id="@+id/nav_account"
-                android:icon="@drawable/ic_account_circle_black_24dp"
-                android:title="@string/nav_account" />
-            <item
-                android:id="@+id/nav_cars"
-                android:icon="@drawable/ic_local_parking_black_24dp"
-                android:title="@string/nav_cars" />
-        </menu>
-    </item>
+        <item android:title="@string/my_clicket">
+            <menu>
+                <item
+                    android:id="@+id/nav_account"
+                    android:icon="@drawable/ic_account_circle_black_24dp"
+                    android:title="@string/nav_account" />
+                <item
+                    android:id="@+id/nav_cars"
+                    android:icon="@drawable/ic_local_parking_black_24dp"
+                    android:title="@string/nav_cars" />
+            </menu>
+        </item>
+    </group>
 
 </menu>

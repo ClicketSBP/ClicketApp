@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity
     private void onSignInClicked() {
         String mEmail = mTxbEmail.getText().toString();
         String mPassword = mTxbPassword.getText().toString();
+
         if (checkCredentials(mEmail, mPassword)) {
             LoginActivityPermissionsDispatcher.loginWithCheck(this, mEmail, mPassword);
         } else {
@@ -134,14 +135,14 @@ public class LoginActivity extends AppCompatActivity
     Callback<JsonObject> loginCallback = new Callback<JsonObject>() {
         @Override
         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() && response.body().getAsJsonPrimitive("success").getAsBoolean()) {
                 JsonObject body = response.body();
                 String token = body.getAsJsonPrimitive("token").getAsString();
                 String email = body.getAsJsonPrimitive("email").getAsString();
 
-                LoginActivityPermissionsDispatcher.addAccountWithCheck((LoginActivity) mContext, email, token);
+                LoginActivityPermissionsDispatcher.addAccountWithCheck(LoginActivity.this, email, token);
             } else {
-                mValidation = "wrong credentials";
+                mValidation = (!response.body().getAsJsonPrimitive("info").getAsString().equals("") ? response.body().getAsJsonPrimitive("info").getAsString() : "unknown error");
                 showLoginError();
             }
         }

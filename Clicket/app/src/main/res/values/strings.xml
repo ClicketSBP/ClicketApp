@@ -11,6 +11,10 @@
     <string name="parking">Parking</string>
     <string name="login">Already have an account? Login here</string>
     <string name="register">Dont\'t have an account? Register here</string>
+    <string name="user">Niels Bril</string>
+    <string name="email">niels.bril@hotmail.com</string>
+    <string name="invoice_amount">Invoice amount</string>
+    <string name="information">Information</string>
 
     <string name="nav_park">Park</string>
     <string name="nav_account">Account</string>
@@ -20,16 +24,15 @@
     <string name="btn_register">Register</string>
 
     <string name="d_logo">logo</string>
+    <string name="d_euro">euro</string>
 
     <string name="h_email">Email</string>
     <string name="h_lastname">Lastname</string>
     <string name="h_firstname">Firstname</string>
-    <string name="h_phone">Phone (0032999999999)</string>
+    <string name="h_phone">Phone (0032499999999)</string>
+    <string name="h_phone_clean">Phone</string>
     <string name="h_password">Password</string>
     <string name="h_confirm_password">Confirm password</string>
-    <string name="user">Niels Bril</string>
-    <string name="email">niels.bril@hotmail.com</string>
+    <string name="h_user">User</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -12,8 +12,6 @@ import permissions.dispatcher.PermissionRequest;
 
 public class Utils {
 
-    private static final Pattern phonePattern = Pattern.compile("^((\\+|00)32\\s?|0)4(60|[789]\\d)(\\s?\\d{2}){3}$");
-
     public static void showRationaleDialog(Context context, String message, final PermissionRequest request) {
         new AlertDialog.Builder(context, R.style.customDialog)
                 .setPositiveButton("Allow", new DialogInterface.OnClickListener() {
@@ -38,7 +36,9 @@ public class Utils {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public static boolean isPhoneValid(String phone) { return phonePattern.matcher(phone).matches(); }
+    public static boolean isPhoneValid(String phone) {
+        return phone.length() == 13;
+    }
 
     public static boolean isPasswordValid(String password) {
         return password.length() >= 8;

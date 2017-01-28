@@ -6,4 +6,8 @@ public class Interfaces {
         void onAccountRegistered(String email, String token);
     }
 
+    public interface changeToolbar {
+        void setTitle(String title);
+    }
+
 }
