@@ -4,8 +4,27 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
 
     <string name="website">www.clicket.be</string>
+    <string name="my_clicket">My Clicket</string>
+    <string name="parking">Parking</string>
+    <string name="login">Already have an account? Login here</string>
+    <string name="register">Dont\'t have an account? Register here</string>
+
+    <string name="nav_park">Park</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_cars">Cars</string>
+
+    <string name="btn_login">Login</string>
+    <string name="btn_register">Register</string>
+
     <string name="d_logo">logo</string>
+
+    <string name="h_email">Email</string>
+    <string name="h_lastname">Lastname</string>
+    <string name="h_firstname">Firstname</string>
+    <string name="h_phone">Phone (0032999999999)</string>
+    <string name="h_password">Password</string>
+    <string name="h_confirm_password">Confirm password</string>
 </resources>
