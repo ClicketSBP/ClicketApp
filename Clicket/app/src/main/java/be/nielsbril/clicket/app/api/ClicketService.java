@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface ClicketService {
@@ -17,5 +19,9 @@ public interface ClicketService {
     @FormUrlEncoded
     @POST("login")
     Call<JsonObject> login(@Field("email") String email, @Field("password") String password);
+
+    //User
+    @GET("api/users")
+    Call<JsonObject> user(@Header("Auhtorization") String token);
 
 }

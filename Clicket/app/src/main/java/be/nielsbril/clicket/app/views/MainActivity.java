@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        if (!AuthHelper.isLoggedIn(this)) {
+        if (!AuthHelper.isLoggedIn(this) || AuthHelper.isTokenExpired(this) || !AuthHelper.isTokenValid(this)) {
             AuthHelper.logUserOff(this);
             showLoginActivity();
         }

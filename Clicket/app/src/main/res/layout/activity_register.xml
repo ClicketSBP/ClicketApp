@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:focusable="true"
@@ -15,159 +15,186 @@
         android:paddingStart="24dp"
         android:paddingTop="56dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="96dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/logo" />
-
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
+            android:id="@+id/llLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:textColorHint="@color/colorText">
+            android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/txbEmail"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="96dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="@string/d_logo"
+                android:src="@drawable/logo" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/llLogo"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/h_email"
-                android:inputType="textEmailAddress"
-                app:backgroundTint="@color/colorAccent" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/colorText">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/txbEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/h_email"
+                    android:inputType="textEmailAddress"
+                    app:backgroundTint="@color/colorAccent" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:textColorHint="@color/colorText">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/txbLastname"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/h_lastname"
-                android:inputType="textCapWords"
-                app:backgroundTint="@color/colorAccent" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/colorText">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/txbLastname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/h_lastname"
+                    android:inputType="textCapWords"
+                    app:backgroundTint="@color/colorAccent" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:textColorHint="@color/colorText">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/txbFirstname"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/h_firstname"
-                android:inputType="textCapWords"
-                app:backgroundTint="@color/colorAccent" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/colorText">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/txbFirstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/h_firstname"
+                    android:inputType="textCapWords"
+                    app:backgroundTint="@color/colorAccent" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:textColorHint="@color/colorText">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/txbPhone"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/h_phone"
-                android:inputType="phone"
-                app:backgroundTint="@color/colorAccent" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/colorText">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/txbPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/h_phone"
+                    android:inputType="phone"
+                    app:backgroundTint="@color/colorAccent" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:textColorHint="@color/colorText">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/txbPassword"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/h_password"
-                android:inputType="textPassword"
-                app:backgroundTint="@color/colorAccent" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/colorText">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/txbPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/h_password"
+                    android:inputType="textPassword"
+                    app:backgroundTint="@color/colorAccent" />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:textColorHint="@color/colorText">
+            </android.support.design.widget.TextInputLayout>
 
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/txbConfirmPassword"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/h_confirm_password"
-                android:inputType="textPassword"
-                app:backgroundTint="@color/colorAccent" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:textColorHint="@color/colorText">
 
-        </android.support.design.widget.TextInputLayout>
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/txbConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/h_confirm_password"
+                    android:inputType="textPassword"
+                    app:backgroundTint="@color/colorAccent" />
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnRegister"
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="18dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/colorAccent"
-            android:padding="12dp"
-            android:text="@string/btn_register"
-            android:textColor="@color/colorPrimaryDark" />
+            android:layout_below="@id/llFields"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtLoginLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"
-            android:text="@string/login"
-            android:textSize="16sp" />
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorAccent"
+                android:padding="12dp"
+                android:text="@string/btn_register"
+                android:textColor="@color/colorPrimaryDark" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txtLoginLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="@string/login"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </ScrollView>

@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:paddingEnd="24dp"
+    android:paddingStart="24dp"
+    android:paddingTop="56dp">
 
     <LinearLayout
+        android:id="@+id/llLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:paddingEnd="24dp"
-        android:paddingStart="24dp"
-        android:paddingTop="56dp">
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="96dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
+            android:contentDescription="@string/d_logo"
             android:src="@drawable/logo" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -64,6 +76,15 @@
 
         </android.support.design.widget.TextInputLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
@@ -86,4 +107,4 @@
 
     </LinearLayout>
 
-</ScrollView>
+</RelativeLayout>

@@ -11,6 +11,15 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.google.gson.JsonObject;
+
+import java.io.IOException;
+
+import be.nielsbril.clicket.app.api.ClicketInstance;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AuthHelper {
 
     private static String mToken;
@@ -81,7 +90,23 @@ public class AuthHelper {
     }
 
     public static Boolean isTokenExpired(Context context) {
-        return false;
+        boolean expired = false;
+
+        Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().user(getAuthToken(context));
+        try {
+            Response<JsonObject> response = call.execute();
+            if (response.isSuccessful()) {
+                expired = true;
+            }
+        } catch (IOException e) {
+            Log.d(AuthHelper.class.getName(), "Error: " + e.getMessage());
+        }
+
+        return expired;
+    }
+
+    public static Boolean isTokenValid(Context context) {
+        return true;
     }
 
     public static Boolean isLoggedIn(Context context) {

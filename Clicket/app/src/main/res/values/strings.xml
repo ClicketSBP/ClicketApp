@@ -27,4 +27,9 @@
     <string name="h_phone">Phone (0032999999999)</string>
     <string name="h_password">Password</string>
     <string name="h_confirm_password">Confirm password</string>
+    <string name="user">Niels Bril</string>
+    <string name="email">niels.bril@hotmail.com</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
