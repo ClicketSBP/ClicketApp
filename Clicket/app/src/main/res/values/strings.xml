@@ -15,6 +15,13 @@
     <string name="email">niels.bril@hotmail.com</string>
     <string name="invoice_amount">Invoice amount</string>
     <string name="information">Information</string>
+    <string name="session">Current session</string>
+    <string name="actions">Actions</string>
+    <string name="started_on">Started:</string>
+    <string name="stopped_on">Stopped:</string>
+    <string name="zone">Zone:</string>
+    <string name="car">Car:</string>
+    <string name="cost">Cost:</string>
 
     <string name="nav_park">Park</string>
     <string name="nav_account">Account</string>
@@ -22,6 +29,9 @@
 
     <string name="btn_login">Login</string>
     <string name="btn_register">Register</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_stop">Stop</string>
+    <string name="btn_history">History</string>
 
     <string name="d_logo">logo</string>
     <string name="d_euro">euro</string>
@@ -34,5 +44,14 @@
     <string name="h_password">Password</string>
     <string name="h_confirm_password">Confirm password</string>
     <string name="h_user">User</string>
+    <string name="h_car">Name</string>
+    <string name="h_license_plate">License plate</string>
+
+    <string name="l_default">Default:</string>
+
+    <string name="cars_prompt">Choose a car</string>
+    <string-array name="cars">
+        <item>No cars</item>
+    </string-array>
 
 </resources>

@@ -71,8 +71,9 @@ public class AccountFragmentViewModel extends BaseObservable {
         if (context instanceof Interfaces.changeToolbar) {
             mListener = (Interfaces.changeToolbar) context;
             mListener.setTitle("Account");
+            mListener.toggleNavItems("account");
         } else {
-            throw new RuntimeException(context.toString() + " must implement headerChangedListener");
+            throw new RuntimeException(context.toString() + " must implement changeToolbar");
         }
     }
 

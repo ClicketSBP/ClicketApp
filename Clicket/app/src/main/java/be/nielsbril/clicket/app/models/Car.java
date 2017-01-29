@@ -1,6 +1,9 @@
 package be.nielsbril.clicket.app.models;
 
-public class Car {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Car implements Parcelable {
 
     private int _id;
     private int user_id;
@@ -54,6 +57,40 @@ public class Car {
 
     public void setDefault_car(boolean default_car) {
         this.default_car = default_car;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(this.get_id());
+        parcel.writeInt(this.getUser_id());
+        parcel.writeString(this.getName());
+        parcel.writeString(this.getLicense_plate());
+        parcel.writeByte((byte) (this.isDefault_car() ? 1 : 0));
+    }
+
+    public static final Creator<Car> CREATOR = new Creator<Car>() {
+        @Override
+        public Car createFromParcel(Parcel in) {
+            return new Car(in);
+        }
+
+        @Override
+        public Car[] newArray(int size) {
+            return new Car[size];
+        }
+    };
+
+    protected Car(Parcel in) {
+        set_id(in.readInt());
+        setUser_id(in.readInt());
+        setName(in.readString());
+        setLicense_plate(in.readString());
+        setDefault_car(in.readByte() != 0);
     }
 
 }

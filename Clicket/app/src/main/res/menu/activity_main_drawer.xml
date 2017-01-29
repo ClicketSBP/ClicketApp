@@ -20,7 +20,7 @@
                     android:title="@string/nav_account" />
                 <item
                     android:id="@+id/nav_cars"
-                    android:icon="@drawable/ic_local_parking_black_24dp"
+                    android:icon="@drawable/ic_directions_car_black_24dp"
                     android:title="@string/nav_cars" />
             </menu>
         </item>

@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.databinding.InverseBindingAdapter;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -26,11 +27,14 @@ import be.nielsbril.clicket.app.helpers.ApiHelper;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
 import be.nielsbril.clicket.app.helpers.Interfaces;
 import be.nielsbril.clicket.app.api.UserResult;
+import be.nielsbril.clicket.app.models.Car;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        Interfaces.changeToolbar {
+        Interfaces.changeToolbar,
+        Interfaces.navigate,
+        Interfaces.onCarSelectedListener {
 
     private NestedScrollView scrollView;
     private Toolbar toolbar;
@@ -63,35 +67,33 @@ public class MainActivity extends AppCompatActivity
         navPark = (MenuItem) menu.findItem(R.id.nav_park);
         navAccount = (MenuItem) menu.findItem(R.id.nav_account);
         navCars = (MenuItem) menu.findItem(R.id.nav_cars);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!AuthHelper.isLoggedIn(this)) {
-            AuthHelper.logUserOff(this);
-            showLoginActivity();
-        } else {
-            navigate(ParkFragment.newInstance(), "parkFragment");
-            ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().user(AuthHelper.getAuthToken(this)), new Action1<UserResult>() {
-                @Override
-                public void call(UserResult userResult) {
-                    if (userResult.isSuccess()) {
-                        ((App) MainActivity.this.getApplication()).setUser(userResult.getData());
+        if (savedInstanceState == null) {
+            if (!AuthHelper.isLoggedIn(this)) {
+                AuthHelper.logUserOff(this);
+                showLoginActivity();
+            } else {
+                navigate(ParkFragment.newInstance(), "parkFragment");
+                ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().user(AuthHelper.getAuthToken(this)), new Action1<UserResult>() {
+                    @Override
+                    public void call(UserResult userResult) {
+                        if (userResult.isSuccess()) {
+                            ((App) MainActivity.this.getApplication()).setUser(userResult.getData());
 
-                        View header = navigationView.getHeaderView(0);
+                            View header = navigationView.getHeaderView(0);
 
-                        TextView txtName = (TextView) header.findViewById(R.id.txtName);
-                        txtName.setText(userResult.getData().getFirstname() + " " + userResult.getData().getName());
+                            TextView txtName = (TextView) header.findViewById(R.id.txtName);
+                            txtName.setText(userResult.getData().getFirstname() + " " + userResult.getData().getName());
 
-                        TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
-                        txtEmail.setText(userResult.getData().getEmail());
-                    } else {
-                        AuthHelper.logUserOff(MainActivity.this);
-                        showLoginActivity();
+                            TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
+                            txtEmail.setText(userResult.getData().getEmail());
+                        } else {
+                            AuthHelper.logUserOff(MainActivity.this);
+                            showLoginActivity();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -175,6 +177,31 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void setTitle(String title) {
         toolbar.setTitle(title);
+    }
+
+    @Override
+    public void toggleNavItems(String tag) {
+        switch (tag) {
+            case "park":
+                toggleNavItems(navPark, navAccount, navCars);
+                break;
+            case "account":
+                toggleNavItems(navAccount, navPark, navCars);
+                break;
+            case "car":
+                toggleNavItems(navCars, navPark, navAccount);
+                break;
+        }
+    }
+
+    @Override
+    public void navigateFragment(Fragment fragment, String tag) {
+        navigate(fragment, tag);
+    }
+
+    @Override
+    public void onCarSelected(Car car) {
+        navigate(EditCarFragment.newInstance(car), "editCarFragment");
     }
 
 }
