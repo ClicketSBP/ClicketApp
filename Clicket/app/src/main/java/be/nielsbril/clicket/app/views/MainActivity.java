@@ -4,8 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -18,11 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import be.nielsbril.clicket.app.App;
 import be.nielsbril.clicket.app.R;
@@ -30,7 +25,7 @@ import be.nielsbril.clicket.app.api.ClicketInstance;
 import be.nielsbril.clicket.app.helpers.ApiHelper;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
 import be.nielsbril.clicket.app.helpers.Interfaces;
-import be.nielsbril.clicket.app.helpers.UserResult;
+import be.nielsbril.clicket.app.api.UserResult;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity

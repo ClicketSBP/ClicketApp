@@ -1,14 +1,16 @@
-package be.nielsbril.clicket.app.helpers;
+package be.nielsbril.clicket.app.api;
 
-import be.nielsbril.clicket.app.models.User;
+import java.util.List;
 
-public class UserResult {
+import be.nielsbril.clicket.app.models.Car;
+
+public class CarResult {
 
     private String info;
     private boolean success;
-    private User data;
+    private List<Car> data;
 
-    public UserResult(String info, boolean success, User data) {
+    public CarResult(String info, boolean success, List<Car> data) {
         this.info = info;
         this.success = success;
         this.data = data;
@@ -30,12 +32,11 @@ public class UserResult {
         this.success = success;
     }
 
-    public User getData() {
+    public List<Car> getData() {
         return data;
     }
 
-    public void setData(User data) {
+    public void setData(List<Car> data) {
         this.data = data;
     }
-
 }

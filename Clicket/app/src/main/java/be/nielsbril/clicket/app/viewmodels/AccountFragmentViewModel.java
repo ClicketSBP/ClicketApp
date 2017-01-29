@@ -10,10 +10,10 @@ import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.View;
 
-import com.android.databinding.library.baseAdapters.BR;
 import com.google.gson.JsonObject;
 
 import be.nielsbril.clicket.app.App;
+import be.nielsbril.clicket.app.BR;
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;
 import be.nielsbril.clicket.app.databinding.FragmentAccountBinding;
@@ -35,7 +35,8 @@ public class AccountFragmentViewModel extends BaseObservable {
     private FloatingActionButton mFab;
     private AppCompatEditText mTxbPhone;
 
-    private boolean edit = true;
+    private boolean mEdit = true;
+    private String mPhone;
 
     private User user = null;
 
@@ -57,12 +58,12 @@ public class AccountFragmentViewModel extends BaseObservable {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (edit) {
+                if (mEdit) {
                     edit();
-                    edit = false;
+                    mEdit = false;
                 } else {
                     save();
-                    edit = true;
+                    mEdit = true;
                 }
             }
         });
@@ -82,36 +83,40 @@ public class AccountFragmentViewModel extends BaseObservable {
 
     private void edit() {
         mTxbPhone.setEnabled(true);
+        mTxbPhone.requestFocus();
         mFab.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_save_white_24dp));
     }
 
     private void save() {
-        String phone = mTxbPhone.getText().toString();
-        if (checkFields(phone)) {
+        mPhone = mTxbPhone.getText().toString();
+        if (checkFields(mPhone)) {
             mTxbPhone.setEnabled(false);
             mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
             Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().editUser(getUser().getEmail(), getUser().getName(), getUser().getFirstname(), getUser().getPhone(), getUser().getInvoice_amount(), AuthHelper.getAuthToken(mContext));
             call.enqueue(editCallback);
+        } else {
+            showSnackbar("Error when saving data: not a valid phone number. Format: 0032499999999.");
         }
     }
 
     private boolean checkFields(String phone) {
         boolean isValid = true;
 
-        if (!Utils.isEmailValid(phone)) {
+        if (!Utils.isPhoneValid(phone)) {
             isValid = false;
         }
 
         return isValid;
     }
 
-    Callback<JsonObject> editCallback = new Callback<JsonObject>() {
+    private Callback<JsonObject> editCallback = new Callback<JsonObject>() {
         @Override
         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
             if (response.isSuccessful() && response.body().getAsJsonPrimitive("success").getAsBoolean()) {
-                // TODO: 28/01/2017 edit user 
+                showSnackbar(response.body().getAsJsonPrimitive("info").getAsString());
+                ((App) ((Activity) mContext).getApplication()).getUser().setPhone(mPhone);
             } else {
-                showError("Error when saving data: try again later");
+                showSnackbar("Error when saving data: try again later");
                 mTxbPhone.setEnabled(false);
                 mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
 
@@ -123,7 +128,7 @@ public class AccountFragmentViewModel extends BaseObservable {
         @Override
         public void onFailure(Call<JsonObject> call, Throwable t) {
             Log.d("Error", t.getMessage());
-            showError("Error when saving data: try again later");
+            showSnackbar("Error when saving data: try again later");
             mTxbPhone.setEnabled(false);
             mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
 
@@ -132,8 +137,8 @@ public class AccountFragmentViewModel extends BaseObservable {
         }
     };
 
-    private void showError(String error) {
-        Snackbar snackbar = Snackbar.make(mTxbPhone, error, Snackbar.LENGTH_SHORT);
+    private void showSnackbar(String message) {
+        Snackbar snackbar = Snackbar.make(mTxbPhone, message, Snackbar.LENGTH_SHORT);
         CustomSnackBar.colorSnackBar(snackbar).show();
     }
 

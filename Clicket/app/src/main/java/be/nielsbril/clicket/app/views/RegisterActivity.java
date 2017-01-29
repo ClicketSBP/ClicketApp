@@ -115,19 +115,19 @@ public class RegisterActivity extends AppCompatActivity
 
         if (email.equals("") || name.equals("") || firstname.equals("") || phone.equals("") || password.equals("") || confirmPassword.equals("")) {
             isValid = false;
-            mValidation = "please fill in all fields";
+            mValidation = "Error when logging in: please fill in all fields";
         } else if (!Utils.isEmailValid(email)) {
             isValid = false;
-            mValidation = "not a valid email address";
+            mValidation = "Error when logging in: not a valid email address";
         } else if (!Utils.isPhoneValid(phone)) {
             isValid = false;
-            mValidation = "not a valid phone number";
+            mValidation = "Error when logging in: not a valid phone number";
         } else if (!Utils.isPasswordValid(password)) {
             isValid = false;
-            mValidation = "password should be at least 8 characters";
+            mValidation = "Error when logging in: password should be at least 8 characters";
         } else if (!password.equals(confirmPassword)) {
             isValid = false;
-            mValidation = "passwords don't match";
+            mValidation = "Error when logging in: passwords don't match";
         }
 
         return isValid;
@@ -150,7 +150,7 @@ public class RegisterActivity extends AppCompatActivity
                 stopDialog();
                 finish();
             } else {
-                mValidation = (!response.body().getAsJsonPrimitive("info").getAsString().equals("") ? response.body().getAsJsonPrimitive("info").getAsString() : "unknown error");
+                mValidation = (!response.body().getAsJsonPrimitive("info").getAsString().equals("") ? response.body().getAsJsonPrimitive("info").getAsString() : "Error when logging in: unknown error");
                 showRegisterError();
             }
         }
@@ -158,14 +158,14 @@ public class RegisterActivity extends AppCompatActivity
         @Override
         public void onFailure(Call<JsonObject> call, Throwable t) {
             Log.d("Error", t.getMessage());
-            mValidation = "unknown error";
+            mValidation = "Error when logging in: unknown error";
             showRegisterError();
         }
     };
 
     private void showRegisterError() {
         progressDialog.dismiss();
-        Snackbar snackbar = Snackbar.make(mTxbEmail, "Error when registering: " + mValidation, Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(mTxbEmail, mValidation, Snackbar.LENGTH_SHORT);
         CustomSnackBar.colorSnackBar(snackbar).show();
     }
 

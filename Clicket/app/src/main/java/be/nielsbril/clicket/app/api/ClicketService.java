@@ -2,7 +2,6 @@ package be.nielsbril.clicket.app.api;
 
 import com.google.gson.JsonObject;
 
-import be.nielsbril.clicket.app.helpers.UserResult;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -27,6 +26,7 @@ public interface ClicketService {
     @GET("api/users")
     Observable<UserResult> user(@Header("Authorization") String token);
 
+    @FormUrlEncoded
     @PUT("api/users")
     Call<JsonObject> editUser(@Field("email") String email, @Field("name") String name, @Field("firstname") String firstname, @Field("phone") String phone, @Field("invoice_amount") String invoiceAmount, @Header("Authorization") String token);
 

@@ -117,10 +117,10 @@ public class LoginActivity extends AppCompatActivity
 
         if (email.equals("") || password.equals("")) {
             isValid = false;
-            mValidation = "please fill in all fields";
+            mValidation = "Error when logging in: please fill in all fields";
         } else if (!Utils.isEmailValid(email)) {
             isValid = false;
-            mValidation = "not a valid email address";
+            mValidation = "Error when logging in: not a valid email address";
         }
 
         return isValid;
@@ -142,7 +142,7 @@ public class LoginActivity extends AppCompatActivity
 
                 LoginActivityPermissionsDispatcher.addAccountWithCheck(LoginActivity.this, email, token);
             } else {
-                mValidation = (!response.body().getAsJsonPrimitive("info").getAsString().equals("") ? response.body().getAsJsonPrimitive("info").getAsString() : "unknown error");
+                mValidation = (!response.body().getAsJsonPrimitive("info").getAsString().equals("") ? response.body().getAsJsonPrimitive("info").getAsString() : "Error when logging in: unknown error");
                 showLoginError();
             }
         }
@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity
         @Override
         public void onFailure(Call<JsonObject> call, Throwable t) {
             Log.d("Error", t.getMessage());
-            mValidation = "unknown error";
+            mValidation = "Error when logging in: unknown error";
             showLoginError();
         }
     };
@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity
 
     private void showLoginError() {
         progressDialog.dismiss();
-        Snackbar snackbar = Snackbar.make(mTxbEmail, "Error when logging in: " + mValidation, Snackbar.LENGTH_SHORT);
+        Snackbar snackbar = Snackbar.make(mTxbEmail, mValidation, Snackbar.LENGTH_SHORT);
         CustomSnackBar.colorSnackBar(snackbar).show();
     }
 
