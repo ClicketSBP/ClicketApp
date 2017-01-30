@@ -52,4 +52,9 @@ public class EditCarFragment extends Fragment {
         mEditCarFragmentViewModel.init();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        mEditCarFragmentViewModel.stop();
+    }
 }

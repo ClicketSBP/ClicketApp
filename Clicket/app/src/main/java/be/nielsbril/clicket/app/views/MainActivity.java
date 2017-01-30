@@ -25,6 +25,8 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import be.nielsbril.clicket.app.App;
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;
@@ -86,28 +88,41 @@ public class MainActivity extends AppCompatActivity
             if (!AuthHelper.isLoggedIn(this)) {
                 AuthHelper.logUserOff(this);
                 showLoginActivity();
-            } else {
-                navigate(ParkFragment.newInstance(), "parkFragment");
-                ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().user(AuthHelper.getAuthToken(this)), new Action1<UserResult>() {
-                    @Override
-                    public void call(UserResult userResult) {
-                        if (userResult.isSuccess()) {
-                            ((App) MainActivity.this.getApplication()).setUser(userResult.getData());
-
-                            View header = navigationView.getHeaderView(0);
-
-                            TextView txtName = (TextView) header.findViewById(R.id.txtName);
-                            txtName.setText(userResult.getData().getFirstname() + " " + userResult.getData().getName());
-
-                            TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
-                            txtEmail.setText(userResult.getData().getEmail());
-                        } else {
-                            AuthHelper.logUserOff(MainActivity.this);
-                            showLoginActivity();
-                        }
-                    }
-                });
             }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        JodaTimeAndroid.init(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AuthHelper.isLoggedIn(this)) {
+            ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().user(AuthHelper.getAuthToken(this)), new Action1<UserResult>() {
+                @Override
+                public void call(UserResult userResult) {
+                    if (userResult.isSuccess()) {
+                        ((App) MainActivity.this.getApplication()).setUser(userResult.getData());
+
+                        View header = navigationView.getHeaderView(0);
+
+                        TextView txtName = (TextView) header.findViewById(R.id.txtName);
+                        txtName.setText(userResult.getData().getFirstname() + " " + userResult.getData().getName());
+
+                        TextView txtEmail = (TextView) header.findViewById(R.id.txtEmail);
+                        txtEmail.setText(userResult.getData().getEmail());
+
+                        navigate(ParkFragment.newInstance(), "parkFragment");
+                    } else {
+                        AuthHelper.logUserOff(MainActivity.this);
+                        showLoginActivity();
+                    }
+                }
+            });
         }
     }
 

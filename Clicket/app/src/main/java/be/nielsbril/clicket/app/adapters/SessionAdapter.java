@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -19,7 +20,9 @@ import be.nielsbril.clicket.app.models.Session;
 
 public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionViewHolder> {
 
+    private DateTimeZone dateTimeZone = DateTimeZone.forID("Europe/Brussels");
     private DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
+    private DateTimeFormatter timeFormatter = DateTimeFormat.forPattern("HH:mm:ss");
 
     private Context mContext;
     private ObservableArrayList<Data> mSessions = null;
@@ -44,8 +47,10 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.SessionV
 
         holder.getRowSessionBinding().txtPrice.setText("€" + String.valueOf(Utils.roundToDecimals(mSessions.get(position).getInfo().getPrice().getTotal(), 2)));
         DateTime start = new DateTime(session.getStarted_on());
+        start = start.withZone(dateTimeZone);
         DateTime stop = new DateTime(session.getStopped_on());
-        holder.getRowSessionBinding().txtDate.setText(start.toString(dateTimeFormatter) + " - " + stop.toString(dateTimeFormatter));
+        stop = stop.withZone(dateTimeZone);
+        holder.getRowSessionBinding().txtDate.setText(start.toString(dateTimeFormatter) + " - " + stop.toString(timeFormatter));
     }
 
     @Override

@@ -15,10 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import be.nielsbril.clicket.app.App;
 import be.nielsbril.clicket.app.BR;
@@ -42,6 +46,7 @@ import rx.functions.Action1;
 
 public class ParkFragmentViewModel extends BaseObservable implements AdapterView.OnItemSelectedListener {
 
+    private DateTimeZone dateTimeZone = DateTimeZone.forID("Europe/Brussels");
     private DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 
     private Interfaces.changeToolbar mListener;
@@ -226,6 +231,7 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
                     startButton(false);
                     stopButton(true);
                     DateTime start = new DateTime(getSession().getStarted_on());
+                    start = start.withZone(dateTimeZone);
                     setStarted_on(start.toString(dateTimeFormatter));
                     setStopped_on("n.a.");
                     setZone(getSession().getZone_id().getName() + " (" + getSession().getStreet() + ")");
@@ -247,6 +253,7 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
                     startButton(false);
                     stopButton(true);
                     DateTime start = new DateTime(getSession().getStarted_on());
+                    start = start.withZone(dateTimeZone);
                     setStarted_on(start.toString(dateTimeFormatter));
                     setStopped_on("n.a.");
                     setZone(getSession().getZone_id().getName() + " (" + getSession().getStreet() + ")");
@@ -268,6 +275,7 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
                     startButton(true);
                     stopButton(false);
                     DateTime stop = new DateTime(sessionStopResult.getData().getSession().getStopped_on());
+                    stop = stop.withZone(dateTimeZone);
                     setStopped_on(stop.toString(dateTimeFormatter));
                     setCost(sessionStopResult.getData().getInfo().getPrice().getTotal());
                     showSnackbar("Stopped your session. You parked for €" + Utils.roundToDecimals(sessionStopResult.getData().getInfo().getPrice().getTotal(), 2) + ".");

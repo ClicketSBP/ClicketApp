@@ -141,6 +141,7 @@ public class LoginActivity extends AppCompatActivity
                 String email = body.getAsJsonPrimitive("email").getAsString();
 
                 LoginActivityPermissionsDispatcher.addAccountWithCheck(LoginActivity.this, email, token);
+                AuthHelper.setAuthToken(token);
             } else {
                 mValidation = (!response.body().getAsJsonPrimitive("info").getAsString().equals("") ? response.body().getAsJsonPrimitive("info").getAsString() : "Error when logging in: unknown error");
                 showLoginError();

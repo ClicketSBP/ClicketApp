@@ -34,4 +34,9 @@ public class AddCarFragment extends Fragment {
         mAddCarFragmentViewModel.init();
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        mAddCarFragmentViewModel.stop();
+    }
 }

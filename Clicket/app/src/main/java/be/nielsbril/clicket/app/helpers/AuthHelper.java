@@ -36,6 +36,10 @@ public class AuthHelper {
         return mAccount.name;
     }
 
+    public static void setAuthToken(String token) {
+        mToken = token;
+    }
+
     public static String getAuthToken(Context context) {
         if (mToken.equals("")) {
             AccountManager accountManager = AccountManager.get(context);
