@@ -93,7 +93,7 @@ public class AccountFragmentViewModel extends BaseObservable {
         if (checkFields(mPhone)) {
             mTxbPhone.setEnabled(false);
             mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
-            Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().editUser(getUser().getEmail(), getUser().getName(), getUser().getFirstname(), getUser().getPhone(), getUser().getInvoice_amount(), AuthHelper.getAuthToken(mContext));
+            Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().editUser(getUser().getEmail(), getUser().getName(), getUser().getFirstname(), getUser().getPhone(), String.valueOf(getUser().getInvoice_amount()), AuthHelper.getAuthToken(mContext));
             call.enqueue(editCallback);
         } else {
             showSnackbar("Error when saving data: not a valid phone number. Format: 0032499999999.");

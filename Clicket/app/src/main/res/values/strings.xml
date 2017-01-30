@@ -54,4 +54,7 @@
         <item>No cars</item>
     </string-array>
 
+    <string formatted="false" name="f_car">%s (%s)</string>
+    <string formatted="false" name="f_double">€ %.2f</string>
+
 </resources>

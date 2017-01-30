@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.databinding.RowCarBinding;
@@ -43,8 +42,6 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
         Car car = mCars.get(position);
         holder.getRowCarBinding().setCar(car);
         holder.getRowCarBinding().executePendingBindings();
-
-        holder.txtLicensePlate.setText(car.getLicense_plate());
     }
 
     @Override
@@ -59,14 +56,10 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
 
         private final RowCarBinding mRowCarBinding;
 
-        private final TextView txtLicensePlate;
-
         private CarViewHolder(RowCarBinding rowCarBinding) {
             super(rowCarBinding.getRoot());
             mRowCarBinding = rowCarBinding;
             rowCarBinding.getRoot().setOnClickListener(this);
-
-            txtLicensePlate = (TextView) rowCarBinding.getRoot().findViewById(R.id.txtLicensePlate);
         }
 
         private RowCarBinding getRowCarBinding() {

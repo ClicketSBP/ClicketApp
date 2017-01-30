@@ -5,8 +5,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 
-import java.util.regex.Pattern;
-
 import be.nielsbril.clicket.app.R;
 import permissions.dispatcher.PermissionRequest;
 
@@ -30,6 +28,11 @@ public class Utils {
                 .setTitle("Permission denied")
                 .setMessage(message)
                 .show();
+    }
+
+    public static double roundToDecimals(double value, int amount) {
+        int temp = (int) (value * Math.pow(10, amount));
+        return ((double) temp) / Math.pow(10, amount);
     }
 
     public static boolean isEmailValid(String email) {

@@ -1,49 +1,29 @@
 package be.nielsbril.clicket.app.models;
 
-import android.util.Log;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 public class Session {
-
-    DateFormat format = new SimpleDateFormat("dd MM yyyy HH:mm:ss", Locale.ENGLISH);
 
     private int _id;
     private Car car_id;
     private double lat;
     private double lng;
     private User user_id;
-    private Date started_on;
+    private String started_on;
     private boolean active;
-    private Date stopped_on;
+    private String stopped_on;
+    private String street;
     private Zone zone_id;
 
-    public Session(int id, Car car_id, double lat, double lng, User user_id, String started_on, boolean active, String stopped_on, Zone zone_id) {
+    public Session(int id, Car car_id, double lat, double lng, User user_id, String started_on, boolean active, String stopped_on, String street, Zone zone_id) {
         _id = id;
         this.car_id = car_id;
         this.lat = lat;
         this.lng = lng;
+        this.started_on = started_on;
         this.user_id = user_id;
         this.active = active;
+        this.stopped_on = stopped_on;
+        this.street = street;
         this.zone_id = zone_id;
-
-        try {
-            this.started_on = format.parse(started_on);
-        } catch (ParseException e) {
-            Log.d("Error", e.getMessage());
-            this.started_on = new Date();
-        }
-
-        try {
-            this.stopped_on = format.parse(stopped_on);
-        } catch (ParseException e) {
-            Log.d("Error", e.getMessage());
-            this.stopped_on = new Date();
-        }
     }
 
     public int get_id() {
@@ -87,16 +67,11 @@ public class Session {
     }
 
     public String getStarted_on() {
-        return started_on.toString();
+        return started_on;
     }
 
     public void setStarted_on(String started_on) {
-        try {
-            this.started_on = format.parse(started_on);
-        } catch (ParseException e) {
-            Log.d("Error", e.getMessage());
-            this.started_on = new Date();
-        }
+        this.started_on = started_on;
     }
 
     public boolean isActive() {
@@ -108,16 +83,19 @@ public class Session {
     }
 
     public String getStopped_on() {
-        return stopped_on.toString();
+        return stopped_on;
     }
 
     public void setStopped_on(String stopped_on) {
-        try {
-            this.stopped_on = format.parse(stopped_on);
-        } catch (ParseException e) {
-            Log.d("Error", e.getMessage());
-            this.stopped_on = new Date();
-        }
+        this.stopped_on = stopped_on;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public Zone getZone_id() {

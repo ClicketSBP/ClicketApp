@@ -1,19 +1,14 @@
 package be.nielsbril.clicket.app.api;
 
-import android.databinding.ObservableArrayList;
+import be.nielsbril.clicket.app.models.Data;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import be.nielsbril.clicket.app.models.Car;
-
-public class CarResult {
+public class SessionStopResult {
 
     private String info;
     private boolean success;
-    private ObservableArrayList<Car> data;
+    private Data data;
 
-    public CarResult(String info, boolean success, ObservableArrayList<Car> data) {
+    public SessionStopResult(String info, boolean success, Data data) {
         this.info = info;
         this.success = success;
         this.data = data;
@@ -35,11 +30,11 @@ public class CarResult {
         this.success = success;
     }
 
-    public ObservableArrayList<Car> getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(ObservableArrayList<Car> data) {
+    public void setData(Data data) {
         this.data = data;
     }
 

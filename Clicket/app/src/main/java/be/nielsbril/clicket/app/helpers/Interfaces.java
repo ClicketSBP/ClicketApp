@@ -1,6 +1,7 @@
 package be.nielsbril.clicket.app.helpers;
 
 import android.app.Fragment;
+import android.location.Location;
 
 import be.nielsbril.clicket.app.models.Car;
 

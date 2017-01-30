@@ -12,7 +12,6 @@ import android.widget.CheckBox;
 
 import com.google.gson.JsonObject;
 
-import be.nielsbril.clicket.app.App;
 import be.nielsbril.clicket.app.BR;
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;

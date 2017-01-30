@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="end"
-                    android:text="" />
+                    android:text="@{viewmodel.started_on}" />
 
             </LinearLayout>
 
@@ -85,7 +85,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="end"
-                    android:text="" />
+                    android:text="@{viewmodel.stopped_on}" />
 
             </LinearLayout>
 
@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="end"
-                    android:text="" />
+                    android:text="@{viewmodel.zone}" />
 
             </LinearLayout>
 
@@ -129,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="end"
-                    android:text="" />
+                    android:text="@{viewmodel.car}" />
 
             </LinearLayout>
 
@@ -151,7 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="end"
-                    android:text="" />
+                    android:text="@{@string/f_double(viewmodel.cost)}" />
 
             </LinearLayout>
 
@@ -227,7 +227,6 @@
                 android:layout_marginBottom="6dp"
                 android:layout_marginTop="6dp"
                 android:background="@color/colorCard"
-                android:enabled="false"
                 android:padding="12dp"
                 android:text="@string/btn_history"
                 android:textColor="@color/colorPrimaryDark" />

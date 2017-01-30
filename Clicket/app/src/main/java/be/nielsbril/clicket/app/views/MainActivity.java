@@ -1,12 +1,17 @@
 package be.nielsbril.clicket.app.views;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
-import android.databinding.InverseBindingAdapter;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,11 +28,19 @@ import android.widget.TextView;
 import be.nielsbril.clicket.app.App;
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;
+import be.nielsbril.clicket.app.api.UserResult;
 import be.nielsbril.clicket.app.helpers.ApiHelper;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
+import be.nielsbril.clicket.app.helpers.CustomSnackBar;
 import be.nielsbril.clicket.app.helpers.Interfaces;
-import be.nielsbril.clicket.app.api.UserResult;
+import be.nielsbril.clicket.app.helpers.Utils;
 import be.nielsbril.clicket.app.models.Car;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity
@@ -46,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

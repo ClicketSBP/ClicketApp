@@ -47,4 +47,20 @@ public interface ClicketService {
     @DELETE("api/car/{id}")
     Call<JsonObject> deleteCar(@Path("id") int id, @Header("Authorization") String token);
 
+    //Sessions
+    @GET("api/session/active")
+    Observable<SessionSingleResult> activeSession(@Header("Authorization") String token);
+
+    @FormUrlEncoded
+    @POST("api/sessions/recent")
+    Observable<SessionResult> sessions(@Field("amount") int amount, @Header("Authorization") String token);
+
+    @FormUrlEncoded
+    @POST("api/session")
+    Observable<SessionSingleResult> startSession(@Field("lat") String lat, @Field("lng") String lng, @Field("car_id") int carId, @Header("Authorization") String token);
+
+    @FormUrlEncoded
+    @POST("api/session/active")
+    Observable<SessionStopResult> stopSession(@Field("id") int id, @Header("Authorization") String token);
+
 }
