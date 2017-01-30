@@ -4,8 +4,6 @@ import java.text.DecimalFormat;
 
 public class User {
 
-    private DecimalFormat precision = new DecimalFormat("0.00");
-
     private int _id;
     private String email;
     private String name;

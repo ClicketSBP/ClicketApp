@@ -24,4 +24,8 @@ public class Interfaces {
         void navigateFragment(Fragment fragment, String tag);
     }
 
+    public interface location {
+        void requestLocation();
+    }
+
 }

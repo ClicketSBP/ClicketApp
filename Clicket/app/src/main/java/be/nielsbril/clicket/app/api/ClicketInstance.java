@@ -21,7 +21,12 @@ public class ClicketInstance {
                 if (RETROFIT_INSTANCE == null) {
                     OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(new LoggingInterceptor()).build();
 
-                    RETROFIT_INSTANCE = new Retrofit.Builder().baseUrl(Contract.API_URL).addCallAdapterFactory(RxJavaCallAdapterFactory.create()).client(okHttpClient).addConverterFactory(GsonConverterFactory.create()).build();
+                    RETROFIT_INSTANCE = new Retrofit.Builder()
+                            .baseUrl(Contract.API_URL)
+                            .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                            .client(okHttpClient)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
                 }
             }
         }

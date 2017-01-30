@@ -6,6 +6,7 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableDouble;
 import android.databinding.ObservableField;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
@@ -42,6 +43,7 @@ import be.nielsbril.clicket.app.models.Car;
 import be.nielsbril.clicket.app.models.Session;
 import be.nielsbril.clicket.app.views.AddCarFragment;
 import be.nielsbril.clicket.app.views.HistoryFragment;
+import be.nielsbril.clicket.app.views.ParkFragment;
 import rx.functions.Action1;
 
 public class ParkFragmentViewModel extends BaseObservable implements AdapterView.OnItemSelectedListener {
@@ -54,6 +56,7 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
 
     private Context mContext;
     private FragmentParkBinding mFragmentParkBinding;
+    private LocationManager mLocationManager;
 
     private Spinner mSpCars;
     private AppCompatButton mBtnStart;
@@ -168,6 +171,10 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
             }
         });
 
+        mLocationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+
+        checkGPS();
+
         if (context instanceof Interfaces.changeToolbar) {
             mListener = (Interfaces.changeToolbar) context;
             mListener.setTitle("Clicket");
@@ -245,6 +252,19 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
     }
 
     private void start() {
+        if (checkGPS()) {
+            if (mLocation == null) {
+                ParkFragment.requestLocation();
+                showSnackbar("Getting location, please try again in a second");
+            } else {
+                startSession();
+            }
+        } else {
+            showSnackbar("Please turn on your GPS signal first");
+        }
+    }
+
+    private void startSession() {
         ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().startSession(Double.toString(mLocation.getLatitude()), Double.toString(mLocation.getLongitude()), mId, AuthHelper.getAuthToken(mContext)), new Action1<SessionSingleResult>() {
             @Override
             public void call(SessionSingleResult sessionSingleResult) {
@@ -327,6 +347,10 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
         startButton(true);
         stopButton(false);
         notifyPropertyChanged(BR.viewmodel);
+    }
+
+    private boolean checkGPS() {
+        return mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     private void showSnackbar(String message) {

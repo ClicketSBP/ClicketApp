@@ -2,6 +2,7 @@ package be.nielsbril.clicket.app.views;
 
 import android.Manifest;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
@@ -15,9 +16,11 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.location.LocationRequest;
 
+import be.nielsbril.clicket.app.App;
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.databinding.FragmentParkBinding;
 import be.nielsbril.clicket.app.helpers.CustomSnackBar;
+import be.nielsbril.clicket.app.helpers.Interfaces;
 import be.nielsbril.clicket.app.helpers.Utils;
 import be.nielsbril.clicket.app.viewmodels.ParkFragmentViewModel;
 import permissions.dispatcher.NeedsPermission;
@@ -58,11 +61,30 @@ public class ParkFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mParkFragmentViewModel.init();
-        ParkFragmentPermissionsDispatcher.requestLocationWithCheck(this);
+        App.setParkFragment(this);
+        ParkFragmentPermissionsDispatcher.getLocationPollingWithCheck(this);
+    }
+
+    public static void requestLocation() {
+        ParkFragmentPermissionsDispatcher.getLocationWithCheck(App.getParkFragment());
     }
 
     @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-    public void requestLocation() {
+    public void getLocation() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        mReactiveLocationProvider.getLastKnownLocation().subscribe(new Action1<Location>() {
+            @Override
+            public void call(Location location) {
+                mParkFragmentViewModel.setLocation(location);
+            }
+        });
+    }
+
+    @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    public void getLocationPolling() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
