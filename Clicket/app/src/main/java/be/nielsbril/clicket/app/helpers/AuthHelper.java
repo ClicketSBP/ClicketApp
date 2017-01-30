@@ -32,10 +32,6 @@ public class AuthHelper {
         }
     }
 
-    public static String getEmail(Context context) {
-        return mAccount.name;
-    }
-
     public static void setAuthToken(String token) {
         mToken = token;
     }

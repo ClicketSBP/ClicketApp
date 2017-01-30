@@ -6,16 +6,19 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableField;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import be.nielsbril.clicket.app.BR;
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;
-import be.nielsbril.clicket.app.api.SessionResult;
+import be.nielsbril.clicket.app.api.SessionsResult;
 import be.nielsbril.clicket.app.databinding.FragmentHistoryBinding;
 import be.nielsbril.clicket.app.helpers.ApiHelper;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
+import be.nielsbril.clicket.app.helpers.CustomSnackbar;
 import be.nielsbril.clicket.app.helpers.Interfaces;
+import be.nielsbril.clicket.app.helpers.Utils;
 import be.nielsbril.clicket.app.models.Data;
 import rx.functions.Action1;
 
@@ -77,11 +80,11 @@ public class HistoryFragmentViewModel extends BaseObservable {
 
     private void loadSessions() {
         setSessions(new ObservableArrayList<Data>());
-        ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().sessions(4, AuthHelper.getAuthToken(mContext)), new Action1<SessionResult>() {
+        ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().sessions(4, AuthHelper.getAuthToken(mContext)), new Action1<SessionsResult>() {
             @Override
-            public void call(SessionResult sessionResult) {
-                if (sessionResult != null && sessionResult.isSuccess()) {
-                    if (sessionResult.getData().size() == 0) {
+            public void call(SessionsResult sessionsResult) {
+                if (sessionsResult != null && sessionsResult.isSuccess()) {
+                    if (sessionsResult.getData().size() == 0) {
                         setMessage("No sessions found");
                         mFragmentHistoryBinding.txtMessage.setVisibility(View.VISIBLE);
                         mFragmentHistoryBinding.rvHistory.setVisibility(View.GONE);
@@ -89,13 +92,19 @@ public class HistoryFragmentViewModel extends BaseObservable {
                     } else {
                         mFragmentHistoryBinding.txtMessage.setVisibility(View.GONE);
                         mFragmentHistoryBinding.rvHistory.setVisibility(View.VISIBLE);
-                        for (int i = 0, l = sessionResult.getData().size(); i < l; i++) {
-                            sessions.add(sessionResult.getData().get(i));
+                        for (int i = 0, l = sessionsResult.getData().size(); i < l; i++) {
+                            sessions.add(sessionsResult.getData().get(i));
                             notifyPropertyChanged(BR.viewmodel);
                         }
                     }
                 } else {
-                    setMessage("Error: try again later");
+                    if (Utils.isNetworkConnected(mContext)) {
+                        setMessage("Error: try again later");
+                    } else {
+                        Snackbar snackbar = Snackbar.make(mFab, "No internet connection. Please turn on your internet signal first.", Snackbar.LENGTH_LONG);
+                        CustomSnackbar.colorSnackBar(snackbar).show();
+                        setMessage("No internet connection");
+                    }
                     mFragmentHistoryBinding.txtMessage.setVisibility(View.VISIBLE);
                     mFragmentHistoryBinding.rvHistory.setVisibility(View.GONE);
                     notifyPropertyChanged(BR.viewmodel);

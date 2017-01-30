@@ -18,7 +18,7 @@ import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;
 import be.nielsbril.clicket.app.databinding.FragmentEditCarBinding;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
-import be.nielsbril.clicket.app.helpers.CustomSnackBar;
+import be.nielsbril.clicket.app.helpers.CustomSnackbar;
 import be.nielsbril.clicket.app.helpers.Interfaces;
 import be.nielsbril.clicket.app.models.Car;
 import retrofit2.Call;
@@ -164,8 +164,8 @@ public class EditCarFragmentViewModel extends BaseObservable {
     };
 
     private void showSnackbar(String message) {
-        Snackbar snackbar = Snackbar.make(mTxbCar, message, Snackbar.LENGTH_SHORT);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        Snackbar snackbar = Snackbar.make(mTxbCar, message, Snackbar.LENGTH_LONG);
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
     public void stop() {

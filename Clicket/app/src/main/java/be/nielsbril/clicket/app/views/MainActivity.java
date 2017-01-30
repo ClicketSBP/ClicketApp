@@ -1,15 +1,10 @@
 package be.nielsbril.clicket.app.views;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -33,16 +28,10 @@ import be.nielsbril.clicket.app.api.ClicketInstance;
 import be.nielsbril.clicket.app.api.UserResult;
 import be.nielsbril.clicket.app.helpers.ApiHelper;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
-import be.nielsbril.clicket.app.helpers.CustomSnackBar;
+import be.nielsbril.clicket.app.helpers.CustomSnackbar;
 import be.nielsbril.clicket.app.helpers.Interfaces;
 import be.nielsbril.clicket.app.helpers.Utils;
 import be.nielsbril.clicket.app.models.Car;
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.OnNeverAskAgain;
-import permissions.dispatcher.OnPermissionDenied;
-import permissions.dispatcher.OnShowRationale;
-import permissions.dispatcher.PermissionRequest;
-import permissions.dispatcher.RuntimePermissions;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity
@@ -105,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().user(AuthHelper.getAuthToken(this)), new Action1<UserResult>() {
                 @Override
                 public void call(UserResult userResult) {
-                    if (userResult.isSuccess()) {
+                    if (userResult != null && userResult.isSuccess()) {
                         ((App) MainActivity.this.getApplication()).setUser(userResult.getData());
 
                         View header = navigationView.getHeaderView(0);
@@ -118,8 +107,13 @@ public class MainActivity extends AppCompatActivity
 
                         navigate(ParkFragment.newInstance(), "parkFragment");
                     } else {
-                        AuthHelper.logUserOff(MainActivity.this);
-                        showLoginActivity();
+                        if (Utils.isNetworkConnected(MainActivity.this)) {
+                            Snackbar snackbar = Snackbar.make(scrollView, "No internet connection. Please turn on your internet signal first.", Snackbar.LENGTH_LONG);
+                            CustomSnackbar.colorSnackBar(snackbar).show();
+                        } else {
+                            AuthHelper.logUserOff(MainActivity.this);
+                            showLoginActivity();
+                        }
                     }
                 }
             });

@@ -4,13 +4,13 @@ import android.databinding.ObservableArrayList;
 
 import be.nielsbril.clicket.app.models.Data;
 
-public class SessionResult {
+public class SessionsResult {
 
     private String info;
     private boolean success;
     private ObservableArrayList<Data> data;
 
-    public SessionResult(String info, boolean success, ObservableArrayList<Data> data) {
+    public SessionsResult(String info, boolean success, ObservableArrayList<Data> data) {
         this.info = info;
         this.success = success;
         this.data = data;

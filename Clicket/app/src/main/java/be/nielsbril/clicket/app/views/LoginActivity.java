@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
@@ -25,7 +24,7 @@ import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
 import be.nielsbril.clicket.app.helpers.Contract;
-import be.nielsbril.clicket.app.helpers.CustomSnackBar;
+import be.nielsbril.clicket.app.helpers.CustomSnackbar;
 import be.nielsbril.clicket.app.helpers.Interfaces;
 import be.nielsbril.clicket.app.helpers.Utils;
 import permissions.dispatcher.NeedsPermission;
@@ -75,6 +74,11 @@ public class LoginActivity extends AppCompatActivity
 
         if (mAccountAuthenticatorResponse != null) {
             mAccountAuthenticatorResponse.onRequestContinued();
+        }
+
+        if (!Utils.isNetworkConnected(this)) {
+            mValidation = "No internet connection. Please turn on your internet signal first.";
+            showLoginError();
         }
     }
 
@@ -151,7 +155,11 @@ public class LoginActivity extends AppCompatActivity
         @Override
         public void onFailure(Call<JsonObject> call, Throwable t) {
             Log.d("Error", t.getMessage());
-            mValidation = "Error when logging in: unknown error";
+            if (Utils.isNetworkConnected(LoginActivity.this)) {
+                mValidation = "Error when logging in: unknown error";
+            } else {
+                mValidation = "No internet connection. Please turn on your internet signal first.";
+            }
             showLoginError();
         }
     };
@@ -199,8 +207,8 @@ public class LoginActivity extends AppCompatActivity
 
     private void showLoginError() {
         progressDialog.dismiss();
-        Snackbar snackbar = Snackbar.make(mTxbEmail, mValidation, Snackbar.LENGTH_SHORT);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        Snackbar snackbar = Snackbar.make(mTxbEmail, mValidation, Snackbar.LENGTH_LONG);
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
     private void showRegisterActivity() {
@@ -260,16 +268,16 @@ public class LoginActivity extends AppCompatActivity
     public void onAccountsDenied() {
         stopDialog();
         AuthHelper.logUserOff(this);
-        Snackbar snackbar = Snackbar.make(mTxbEmail, "Accounts permission denied, consider accepting to use this app", Snackbar.LENGTH_SHORT);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        Snackbar snackbar = Snackbar.make(mTxbEmail, "Accounts permission denied, consider accepting to use this app", Snackbar.LENGTH_LONG);
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
     @OnNeverAskAgain(Manifest.permission.GET_ACCOUNTS)
     public void onAccountsNeverAskAgain() {
         stopDialog();
         AuthHelper.logUserOff(this);
-        Snackbar snackbar = Snackbar.make(mTxbEmail, "Accounts permission denied with never ask again", Snackbar.LENGTH_SHORT);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        Snackbar snackbar = Snackbar.make(mTxbEmail, "Accounts permission denied with never ask again", Snackbar.LENGTH_LONG);
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
 }

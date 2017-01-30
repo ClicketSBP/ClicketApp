@@ -2,6 +2,7 @@ package be.nielsbril.clicket.app.helpers;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Patterns;
 
@@ -33,6 +34,11 @@ public class Utils {
     public static double roundToDecimals(double value, int amount) {
         int temp = (int) (value * Math.pow(10, amount));
         return ((double) temp) / Math.pow(10, amount);
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo() != null;
     }
 
     public static boolean isEmailValid(String email) {

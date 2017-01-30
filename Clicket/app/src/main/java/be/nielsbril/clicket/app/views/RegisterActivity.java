@@ -19,8 +19,7 @@ import com.google.gson.JsonObject;
 
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;
-import be.nielsbril.clicket.app.api.ClicketService;
-import be.nielsbril.clicket.app.helpers.CustomSnackBar;
+import be.nielsbril.clicket.app.helpers.CustomSnackbar;
 import be.nielsbril.clicket.app.helpers.Interfaces;
 import be.nielsbril.clicket.app.helpers.Utils;
 import retrofit2.Call;
@@ -69,6 +68,11 @@ public class RegisterActivity extends AppCompatActivity
 
         if (mAccountAuthenticatorResponse != null) {
             mAccountAuthenticatorResponse.onRequestContinued();
+        }
+
+        if (!Utils.isNetworkConnected(this)) {
+            mValidation = "No internet connection. Please turn on your internet signal first.";
+            showRegisterError();
         }
     }
 
@@ -158,15 +162,19 @@ public class RegisterActivity extends AppCompatActivity
         @Override
         public void onFailure(Call<JsonObject> call, Throwable t) {
             Log.d("Error", t.getMessage());
-            mValidation = "Error when logging in: unknown error";
+            if (Utils.isNetworkConnected(RegisterActivity.this)) {
+                mValidation = "Error when logging in: unknown error";
+            } else {
+                mValidation = "Please turn on your internet signal first";
+            }
             showRegisterError();
         }
     };
 
     private void showRegisterError() {
         progressDialog.dismiss();
-        Snackbar snackbar = Snackbar.make(mTxbEmail, mValidation, Snackbar.LENGTH_SHORT);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        Snackbar snackbar = Snackbar.make(mTxbEmail, mValidation, Snackbar.LENGTH_LONG);
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
     @Override

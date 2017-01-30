@@ -2,18 +2,15 @@ package be.nielsbril.clicket.app.api;
 
 import android.databinding.ObservableArrayList;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import be.nielsbril.clicket.app.models.Car;
 
-public class CarResult {
+public class CarsResult {
 
     private String info;
     private boolean success;
     private ObservableArrayList<Car> data;
 
-    public CarResult(String info, boolean success, ObservableArrayList<Car> data) {
+    public CarsResult(String info, boolean success, ObservableArrayList<Car> data) {
         this.info = info;
         this.success = success;
         this.data = data;

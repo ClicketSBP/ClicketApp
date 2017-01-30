@@ -18,7 +18,7 @@ import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.api.ClicketInstance;
 import be.nielsbril.clicket.app.databinding.FragmentAccountBinding;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
-import be.nielsbril.clicket.app.helpers.CustomSnackBar;
+import be.nielsbril.clicket.app.helpers.CustomSnackbar;
 import be.nielsbril.clicket.app.helpers.Interfaces;
 import be.nielsbril.clicket.app.helpers.Utils;
 import be.nielsbril.clicket.app.models.User;
@@ -94,7 +94,7 @@ public class AccountFragmentViewModel extends BaseObservable {
             mTxbPhone.setEnabled(false);
             mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
             Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().editUser(getUser().getEmail(), getUser().getName(), getUser().getFirstname(), getUser().getPhone(), String.valueOf(getUser().getInvoice_amount()), AuthHelper.getAuthToken(mContext));
-            call.enqueue(editCallback);
+            call.enqueue(saveCallback);
         } else {
             showSnackbar("Error when saving data: not a valid phone number. Format: 0032499999999.");
         }
@@ -110,7 +110,7 @@ public class AccountFragmentViewModel extends BaseObservable {
         return isValid;
     }
 
-    private Callback<JsonObject> editCallback = new Callback<JsonObject>() {
+    private Callback<JsonObject> saveCallback = new Callback<JsonObject>() {
         @Override
         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
             if (response.isSuccessful() && response.body().getAsJsonPrimitive("success").getAsBoolean()) {
@@ -139,8 +139,8 @@ public class AccountFragmentViewModel extends BaseObservable {
     };
 
     private void showSnackbar(String message) {
-        Snackbar snackbar = Snackbar.make(mTxbPhone, message, Snackbar.LENGTH_SHORT);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        Snackbar snackbar = Snackbar.make(mTxbPhone, message, Snackbar.LENGTH_LONG);
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
 }

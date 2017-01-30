@@ -4,7 +4,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
-public class CustomSnackBar {
+public class CustomSnackbar {
 
     private static final int black = 0xff172430;
     private static final int white = 0xffeeeff7;

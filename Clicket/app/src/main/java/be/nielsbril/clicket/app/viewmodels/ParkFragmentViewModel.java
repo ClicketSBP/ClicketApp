@@ -21,14 +21,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import be.nielsbril.clicket.app.App;
 import be.nielsbril.clicket.app.BR;
 import be.nielsbril.clicket.app.R;
-import be.nielsbril.clicket.app.api.CarResult;
+import be.nielsbril.clicket.app.api.CarsResult;
 import be.nielsbril.clicket.app.api.ClicketInstance;
 import be.nielsbril.clicket.app.api.SessionSingleResult;
 import be.nielsbril.clicket.app.api.SessionStopResult;
@@ -36,7 +33,7 @@ import be.nielsbril.clicket.app.api.UserResult;
 import be.nielsbril.clicket.app.databinding.FragmentParkBinding;
 import be.nielsbril.clicket.app.helpers.ApiHelper;
 import be.nielsbril.clicket.app.helpers.AuthHelper;
-import be.nielsbril.clicket.app.helpers.CustomSnackBar;
+import be.nielsbril.clicket.app.helpers.CustomSnackbar;
 import be.nielsbril.clicket.app.helpers.Interfaces;
 import be.nielsbril.clicket.app.helpers.Utils;
 import be.nielsbril.clicket.app.models.Car;
@@ -197,17 +194,17 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
     }
 
     private void loadCars() {
-        ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().cars(AuthHelper.getAuthToken(mContext)), new Action1<CarResult>() {
+        ApiHelper.subscribe(ClicketInstance.getClicketserviceInstance().cars(AuthHelper.getAuthToken(mContext)), new Action1<CarsResult>() {
             @Override
-            public void call(CarResult carResult) {
-                if (carResult != null && carResult.isSuccess()) {
-                    if (carResult.getData().size() == 0) {
+            public void call(CarsResult carsResult) {
+                if (carsResult != null && carsResult.isSuccess()) {
+                    if (carsResult.getData().size() == 0) {
                         showSnackbar("Please add a car first");
                         mNavigator.navigateFragment(AddCarFragment.newInstance(), "addCarFragment");
                     } else {
                         if (mCars.size() == 0) {
-                            for (int i = 0, l = carResult.getData().size(); i < l; i++) {
-                                Car car = carResult.getData().get(i);
+                            for (int i = 0, l = carsResult.getData().size(); i < l; i++) {
+                                Car car = carsResult.getData().get(i);
                                 mCars.add(car.getName() + " (" + car.getLicense_plate() + ")");
                                 mCarIds.add(car.get_id());
                             }
@@ -220,7 +217,11 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
                         }
                     }
                 } else {
-                    showSnackbar("Error: try again later");
+                    if (Utils.isNetworkConnected(mContext)) {
+                        showSnackbar("Error: try again later");
+                    } else {
+                        showSnackbar("No internet connection. Please turn on your internet signal first.");
+                    }
                     startButton(false);
                     stopButton(false);
                 }
@@ -355,7 +356,7 @@ public class ParkFragmentViewModel extends BaseObservable implements AdapterView
 
     private void showSnackbar(String message) {
         Snackbar snackbar = Snackbar.make(mSpCars, message, Snackbar.LENGTH_LONG);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
     @Override

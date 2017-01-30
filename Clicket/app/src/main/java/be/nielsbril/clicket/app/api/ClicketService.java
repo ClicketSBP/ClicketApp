@@ -34,7 +34,7 @@ public interface ClicketService {
 
     //Cars
     @GET("api/cars/all")
-    Observable<CarResult> cars(@Header("Authorization") String token);
+    Observable<CarsResult> cars(@Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("api/car")
@@ -48,12 +48,12 @@ public interface ClicketService {
     Call<JsonObject> deleteCar(@Path("id") int id, @Header("Authorization") String token);
 
     //Sessions
-    @GET("api/session/active")
-    Observable<SessionSingleResult> activeSession(@Header("Authorization") String token);
-
     @FormUrlEncoded
     @POST("api/sessions/recent")
-    Observable<SessionResult> sessions(@Field("amount") int amount, @Header("Authorization") String token);
+    Observable<SessionsResult> sessions(@Field("amount") int amount, @Header("Authorization") String token);
+
+    @GET("api/session/active")
+    Observable<SessionSingleResult> activeSession(@Header("Authorization") String token);
 
     @FormUrlEncoded
     @POST("api/session")

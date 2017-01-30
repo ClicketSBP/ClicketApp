@@ -1,7 +1,6 @@
 package be.nielsbril.clicket.app.helpers;
 
 import android.app.Fragment;
-import android.location.Location;
 
 import be.nielsbril.clicket.app.models.Car;
 
@@ -22,10 +21,6 @@ public class Interfaces {
 
     public interface navigate {
         void navigateFragment(Fragment fragment, String tag);
-    }
-
-    public interface location {
-        void requestLocation();
     }
 
 }

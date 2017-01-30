@@ -2,7 +2,6 @@ package be.nielsbril.clicket.app.views;
 
 import android.Manifest;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.location.Location;
@@ -19,8 +18,7 @@ import com.google.android.gms.location.LocationRequest;
 import be.nielsbril.clicket.app.App;
 import be.nielsbril.clicket.app.R;
 import be.nielsbril.clicket.app.databinding.FragmentParkBinding;
-import be.nielsbril.clicket.app.helpers.CustomSnackBar;
-import be.nielsbril.clicket.app.helpers.Interfaces;
+import be.nielsbril.clicket.app.helpers.CustomSnackbar;
 import be.nielsbril.clicket.app.helpers.Utils;
 import be.nielsbril.clicket.app.viewmodels.ParkFragmentViewModel;
 import permissions.dispatcher.NeedsPermission;
@@ -111,13 +109,13 @@ public class ParkFragment extends Fragment {
     @OnPermissionDenied(Manifest.permission.ACCESS_FINE_LOCATION)
     public void onAccountsDenied() {
         Snackbar snackbar = Snackbar.make(mFragmentParkBinding.btnStart, "Location permission denied, consider accepting to use this app", Snackbar.LENGTH_SHORT);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
     @OnNeverAskAgain(Manifest.permission.ACCESS_FINE_LOCATION)
     public void onAccountsNeverAskAgain() {
         Snackbar snackbar = Snackbar.make(mFragmentParkBinding.btnStart, "Location permission denied with never ask again", Snackbar.LENGTH_SHORT);
-        CustomSnackBar.colorSnackBar(snackbar).show();
+        CustomSnackbar.colorSnackBar(snackbar).show();
     }
 
 }
