@@ -106,7 +106,7 @@ public class AccountFragmentViewModel extends BaseObservable {
             mTxbFirstname.setEnabled(false);
             mTxbPhone.setEnabled(false);
             mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
-            Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().editUser(getUser().getEmail(), mFirstname, mFirstname, mPhone, String.valueOf(getUser().getInvoice_amount()), AuthHelper.getAuthToken(mContext));
+            Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().editUser(getUser().getEmail(), mName, mFirstname, mPhone, String.valueOf(getUser().getInvoice_amount()), AuthHelper.getAuthToken(mContext));
             call.enqueue(saveCallback);
         } else {
             showSnackbar(mValidation);
