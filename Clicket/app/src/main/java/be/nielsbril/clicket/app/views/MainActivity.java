@@ -218,6 +218,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void setDrawerItems(String fullname) {
+        View header = navigationView.getHeaderView(0);
+
+        TextView txtName = (TextView) header.findViewById(R.id.txtName);
+        txtName.setText(fullname);
+    }
+
+    @Override
     public void navigateFragment(Fragment fragment, String tag) {
         navigate(fragment, tag);
     }

@@ -33,10 +33,15 @@ public class AccountFragmentViewModel extends BaseObservable {
     private Context mContext;
     private FragmentAccountBinding mFragmentAccountBinding;
     private FloatingActionButton mFab;
+    private AppCompatEditText mTxbName;
+    private AppCompatEditText mTxbFirstname;
     private AppCompatEditText mTxbPhone;
 
     private boolean mEdit = true;
+    private String mName;
+    private String mFirstname;
     private String mPhone;
+    private String mValidation;
 
     private User user = null;
 
@@ -52,6 +57,8 @@ public class AccountFragmentViewModel extends BaseObservable {
         mContext = context;
         mFragmentAccountBinding = fragmentAccountBinding;
         mFab = (FloatingActionButton) fragmentAccountBinding.getRoot().findViewById(R.id.fabUser);
+        mTxbName = (AppCompatEditText) fragmentAccountBinding.getRoot().findViewById(R.id.txbName);
+        mTxbFirstname = (AppCompatEditText) fragmentAccountBinding.getRoot().findViewById(R.id.txbFirstname);
         mTxbPhone = (AppCompatEditText) fragmentAccountBinding.getRoot().findViewById(R.id.txbPhone);
         setUser(((App) ((Activity) mContext).getApplication()).getUser());
 
@@ -83,27 +90,37 @@ public class AccountFragmentViewModel extends BaseObservable {
     }
 
     private void edit() {
+        mTxbName.setEnabled(true);
+        mTxbFirstname.setEnabled(true);
         mTxbPhone.setEnabled(true);
-        mTxbPhone.requestFocus();
+        mTxbName.requestFocus();
         mFab.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_save_white_24dp));
     }
 
     private void save() {
+        mName = mTxbName.getText().toString();
+        mFirstname = mTxbFirstname.getText().toString();
         mPhone = mTxbPhone.getText().toString();
-        if (checkFields(mPhone)) {
+        if (checkFields(mName, mFirstname, mPhone)) {
+            mTxbName.setEnabled(false);
+            mTxbFirstname.setEnabled(false);
             mTxbPhone.setEnabled(false);
             mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
-            Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().editUser(getUser().getEmail(), getUser().getName(), getUser().getFirstname(), getUser().getPhone(), String.valueOf(getUser().getInvoice_amount()), AuthHelper.getAuthToken(mContext));
+            Call<JsonObject> call = ClicketInstance.getClicketserviceInstance().editUser(getUser().getEmail(), mFirstname, mFirstname, mPhone, String.valueOf(getUser().getInvoice_amount()), AuthHelper.getAuthToken(mContext));
             call.enqueue(saveCallback);
         } else {
-            showSnackbar("Error when saving data: not a valid phone number. Format: 0032499999999.");
+            showSnackbar(mValidation);
         }
     }
 
-    private boolean checkFields(String phone) {
+    private boolean checkFields(String name, String firstname, String phone) {
         boolean isValid = true;
 
-        if (!Utils.isPhoneValid(phone)) {
+        if (name.equals("") || firstname.equals("") || phone.equals("")) {
+            mValidation = "Error when saving data: please supply all fields";
+            isValid = false;
+        } if (!Utils.isPhoneValid(phone)) {
+            mValidation = "Error when saving data: not a valid phone number. Format: 0032499999999.";
             isValid = false;
         }
 
@@ -115,12 +132,19 @@ public class AccountFragmentViewModel extends BaseObservable {
         public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
             if (response.isSuccessful() && response.body().getAsJsonPrimitive("success").getAsBoolean()) {
                 showSnackbar(response.body().getAsJsonPrimitive("info").getAsString());
+                ((App) ((Activity) mContext).getApplication()).getUser().setName(mName);
+                ((App) ((Activity) mContext).getApplication()).getUser().setFirstname(mFirstname);
                 ((App) ((Activity) mContext).getApplication()).getUser().setPhone(mPhone);
+                mListener.setDrawerItems(mFirstname + " " + mName);
             } else {
                 showSnackbar("Error when saving data: try again later");
+                mTxbName.setEnabled(false);
+                mTxbFirstname.setEnabled(false);
                 mTxbPhone.setEnabled(false);
                 mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
 
+                mTxbName.setText(getUser().getName());
+                mTxbFirstname.setText(getUser().getFirstname());
                 mTxbPhone.setText(getUser().getPhone());
             }
             notifyPropertyChanged(BR.viewmodel);
@@ -130,9 +154,13 @@ public class AccountFragmentViewModel extends BaseObservable {
         public void onFailure(Call<JsonObject> call, Throwable t) {
             Log.d("Error", t.getMessage());
             showSnackbar("Error when saving data: try again later");
+            mTxbName.setEnabled(false);
+            mTxbFirstname.setEnabled(false);
             mTxbPhone.setEnabled(false);
             mFab.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_mode_edit_white_24dp));
 
+            mTxbName.setText(getUser().getName());
+            mTxbFirstname.setText(getUser().getFirstname());
             mTxbPhone.setText(getUser().getPhone());
             notifyPropertyChanged(BR.viewmodel);
         }

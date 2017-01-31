@@ -97,7 +97,7 @@
                     android:textColorHint="@color/colorAccent">
 
                     <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/txbUser"
+                        android:id="@+id/txbEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -105,9 +105,9 @@
                         android:layout_marginTop="5dp"
                         android:ems="10"
                         android:enabled="false"
-                        android:hint="@string/h_user"
-                        android:inputType="text"
-                        android:text="@{viewmodel.getUser().getFirstname() + ' ' + viewmodel.getUser().getName()}"
+                        android:hint="@string/h_email"
+                        android:inputType="textEmailAddress"
+                        android:text="@{viewmodel.getUser().getEmail()}"
                         app:backgroundTint="@color/colorAccent" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -120,7 +120,7 @@
                     android:textColorHint="@color/colorAccent">
 
                     <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/txbEmail"
+                        android:id="@+id/txbName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
@@ -128,9 +128,32 @@
                         android:layout_marginTop="5dp"
                         android:ems="10"
                         android:enabled="false"
-                        android:hint="@string/h_email"
-                        android:inputType="text"
-                        android:text="@{viewmodel.getUser().getEmail()}"
+                        android:hint="@string/h_lastname"
+                        android:inputType="textCapWords"
+                        android:text="@{viewmodel.getUser().getName()}"
+                        app:backgroundTint="@color/colorAccent" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textColorHint="@color/colorAccent">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/txbFirstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:ems="10"
+                        android:enabled="false"
+                        android:hint="@string/h_firstname"
+                        android:inputType="textCapWords"
+                        android:text="@{viewmodel.getUser().getFirstname()}"
                         app:backgroundTint="@color/colorAccent" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -152,7 +175,7 @@
                         android:ems="10"
                         android:enabled="false"
                         android:hint="@string/h_phone_clean"
-                        android:inputType="text"
+                        android:inputType="phone"
                         android:text="@{viewmodel.getUser().getPhone()}"
                         app:backgroundTint="@color/colorAccent" />
 

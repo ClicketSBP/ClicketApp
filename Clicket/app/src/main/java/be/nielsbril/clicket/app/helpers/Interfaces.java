@@ -17,6 +17,7 @@ public class Interfaces {
     public interface changeToolbar {
         void setTitle(String title);
         void toggleNavItems(String tag);
+        void setDrawerItems(String fullname);
     }
 
     public interface navigate {

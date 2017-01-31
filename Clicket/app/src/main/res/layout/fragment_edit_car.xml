@@ -37,7 +37,7 @@
                     android:layout_marginTop="5dp"
                     android:ems="10"
                     android:hint="@string/h_car"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:text="@{viewmodel.getCar().getName()}"
                     app:backgroundTint="@color/colorAccent" />
 
@@ -59,7 +59,7 @@
                     android:layout_marginTop="5dp"
                     android:ems="10"
                     android:hint="@string/h_license_plate"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:text="@{viewmodel.getCar().getLicense_plate()}"
                     app:backgroundTint="@color/colorAccent" />
 

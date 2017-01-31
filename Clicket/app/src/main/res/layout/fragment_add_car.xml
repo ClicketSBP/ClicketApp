@@ -37,7 +37,7 @@
                     android:layout_marginTop="5dp"
                     android:ems="10"
                     android:hint="@string/h_car"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     app:backgroundTint="@color/colorAccent" />
 
             </android.support.design.widget.TextInputLayout>
@@ -58,7 +58,7 @@
                     android:layout_marginTop="5dp"
                     android:ems="10"
                     android:hint="@string/h_license_plate"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     app:backgroundTint="@color/colorAccent" />
 
             </android.support.design.widget.TextInputLayout>
